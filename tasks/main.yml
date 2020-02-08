@@ -1,2 +1,20 @@
 ---
 # tasks file for ansible-role-ovirt_storage_domain
+- name: Get Optimal oVirt Storage Domain
+  get_storage_domain:
+    ovirt_hostname: "{{ ovirt_hostname }}"
+    ovirt_username: "{{ ovirt_username }}"
+    ovirt_password: "{{ ovirt_password }}"
+    ovirt_data_centre: "{{ ovirt_data_centre }}"
+  register: ovirt_storage_domain
+  delegate_to: localhost
+  tags:
+    - ovirt
+    - storage
+
+- name: Display the oVirt Storage Domain
+  debug:
+    msg: "oVirt storage domain: {{ ovirt_storage_domain }}"
+  tags:
+    - ovirt
+    - storage
