@@ -1,0 +1,5 @@
+---
+# defaults file for ansible-role-ovirt_storage_domain
+ovirt_hostname: "host.example.com"
+ovirt_username: "admin@internal"
+ovirt_password: "password"

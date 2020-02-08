@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  roles:
+    - ansible-role-ovirt_storage_domain
