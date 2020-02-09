@@ -3,6 +3,7 @@
 from ansible.module_utils.basic import AnsibleModule
 from distutils.version import LooseVersion
 import json
+import re
 
 
 try:
@@ -13,7 +14,7 @@ except ImportError:
      OVIRTSDK_FOUND = False
 
 
-def get_storage_domain(dc):
+def get_storage_domain(connection, dc):
     dc = dc.upper()
     storage_domain = None
 
@@ -55,8 +56,9 @@ def main():
     if not OVIRTSDK_FOUND:
         a_module.fail_json(msg="ovirtsdk4 library is required for this module")
 
-    if sdk.__version__ and LooseVersion(sdk.__version__) < LooseVersion("4.3.3"):
-        a_module.fail_json(msg="ovirtsdk4 library version should be >= 4.3.3")
+    # FIXME: Version check is not working
+    #if sdk.__version__ and LooseVersion(sdk.__version__) < LooseVersion("4.3.3"):
+    #    a_module.fail_json(msg="ovirtsdk4 library version should be >= 4.3.3")
 
     if a_module.params["ovirt_hostname"] and a_module.params["ovirt_hostname"] == 'host.example.com':
         a_module.fail_json(msg="ovirt_hostname variable has not been changed from default")
@@ -72,9 +74,18 @@ def main():
 
     result = dict(changed=False)
 
+    # Create the connection to the server:
+    connection = sdk.Connection(
+        url="https://{fqdn}/ovirt-engine/api".format(fqdn=a_module.params["ovirt_hostname"]),
+        username=a_module.params["ovirt_username"],
+        password=a_module.params["ovirt_password"],
+        insecure=True,
+        debug=True
+    )
+
     # Get the storage domains that match example_dc and return the one with
     # the most available disk space
-    sd = get_storage_domain(a_module.params["ovirt_data_centre"])
+    sd = get_storage_domain(connection, a_module.params["ovirt_data_centre"])
 
     if sd is not None:
         result["changed"] = True
