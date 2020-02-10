@@ -67,7 +67,7 @@ def main():
     if a_module.params["engine_password"] and a_module.params["engine_password"] == 'password':
         a_module.fail_json(msg="engine_password variable has not been changed from default")
 
-    if not a_module.params["engine_cafile"]e:
+    if not a_module.params["engine_cafile"]:
         a_module.fail_json(msg="engine_cafile variable has not been provided")
 
     if a_module.params["engine_data_centre"] and a_module.params["engine_data_centre"] == 'example_dc':
