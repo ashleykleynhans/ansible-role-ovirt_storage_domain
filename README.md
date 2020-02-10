@@ -12,12 +12,13 @@ Requirements
 Role Variables
 --------------
 
-    ovirt_hostname: "host.example.com"
-    ovirt_username: "admin@internal"
-    ovirt_password: "password"
-    ovirt_data_centre: "example_dc"
+    engine_url: "https://host.example.com/ovirt-engine/api"
+    engine_user: "admin@internal"
+    engine_password: "password"
+    engine_cafile:  "CA_FILE_PATH"
+    engine_data_centre: "example_dc"
 
-For security reasons, it is strongly recommended to use Ansible vault to encrypt the *ovirt_password*.
+For security reasons, it is strongly recommended to use Ansible vault to encrypt the *engine_password*.
 
 Dependencies
 ------------

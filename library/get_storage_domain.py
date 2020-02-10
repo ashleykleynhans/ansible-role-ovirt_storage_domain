@@ -45,10 +45,11 @@ def get_storage_domain(connection, dc):
 
 def main():
     argument_spec = dict(
-        ovirt_hostname=dict(type="str", required=True),
-        ovirt_username=dict(type="str", required=True),
-        ovirt_password=dict(type="str", required=True, no_log=True),
-        ovirt_data_centre=dict(type="str", required=True)
+        engine_url=dict(type="str", required=True),
+        engine_user=dict(type="str", required=True),
+        engine_password=dict(type="str", required=True, no_log=True),
+        engine_cafile=dict(type="str", required=True, no_log=True),
+        engine_data_centre=dict(type="str", required=True)
     )
 
     a_module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
@@ -60,32 +61,34 @@ def main():
     #if sdk.__version__ and LooseVersion(sdk.__version__) < LooseVersion("4.3.3"):
     #    a_module.fail_json(msg="ovirtsdk4 library version should be >= 4.3.3")
 
-    if a_module.params["ovirt_hostname"] and a_module.params["ovirt_hostname"] == 'host.example.com':
-        a_module.fail_json(msg="ovirt_hostname variable has not been changed from default")
+    if a_module.params["engine_url"] and a_module.params["engine_url"] == 'https://host.example.com/ovirt-engine/api':
+        a_module.fail_json(msg="engine_url variable has not been changed from default")
 
-    if a_module.params["ovirt_username"] and a_module.params["ovirt_username"] == 'default@internal':
-        a_module.fail_json(msg="ovirt_username variable has not been changed from default")
+    if a_module.params["engine_password"] and a_module.params["engine_password"] == 'password':
+        a_module.fail_json(msg="engine_password variable has not been changed from default")
 
-    if a_module.params["ovirt_password"] and a_module.params["ovirt_password"] == 'password':
-        a_module.fail_json(msg="ovirt_password variable has not been changed from default")
+    if a_module.params["engine_cafile"]  is None:
+        a_module.fail_json(msg="engine_cafile variable has not been provided")
 
-    if a_module.params["ovirt_data_centre"] and a_module.params["ovirt_data_centre"] == 'example_dc':
-        a_module.fail_json(msg="ovirt_data_centre variable has not been changed from default")
+    if a_module.params["engine_data_centre"] and a_module.params["engine_data_centre"] == 'example_dc':
+        a_module.fail_json(msg="engine_data_centre variable has not been changed from default")
+
+    if a_module.params["engine_data_centre"] and a_module.params["engine_data_centre"] == 'example_dc':
+        a_module.fail_json(msg="engine_data_centre variable has not been changed from default")
 
     result = dict(changed=False)
 
     # Create the connection to the server:
     connection = sdk.Connection(
-        url="https://{fqdn}/ovirt-engine/api".format(fqdn=a_module.params["ovirt_hostname"]),
-        username=a_module.params["ovirt_username"],
-        password=a_module.params["ovirt_password"],
-        insecure=True,
-        debug=True
+        url=a_module.params["engine_url"],
+        username=a_module.params["engine_user"],
+        password=a_module.params["engine_password"],
+        cafile=a_module.params["engine_cafile"]
     )
 
     # Get the storage domains that match example_dc and return the one with
     # the most available disk space
-    sd = get_storage_domain(connection, a_module.params["ovirt_data_centre"])
+    sd = get_storage_domain(connection, a_module.params["engine_data_centre"])
 
     if sd is not None:
         result["changed"] = True
