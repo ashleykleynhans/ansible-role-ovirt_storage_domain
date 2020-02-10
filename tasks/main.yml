@@ -2,10 +2,11 @@
 # tasks file for ansible-role-ovirt_storage_domain
 - name: Get Optimal oVirt Storage Domain
   get_storage_domain:
-    ovirt_hostname: "{{ ovirt_hostname }}"
-    ovirt_username: "{{ ovirt_username }}"
-    ovirt_password: "{{ ovirt_password }}"
-    ovirt_data_centre: "{{ ovirt_data_centre }}"
+    engine_url: "{{ engine_url }}"
+    engine_user: "{{ engine_user }}"
+    engine_password: "{{ engine_password }}"
+    engine_cafile: "{{ engine_cafile }}"
+    engine_data_centre: "{{ engine_data_centre }}"
   register: ovirt_storage_domain
   delegate_to: localhost
   tags:
