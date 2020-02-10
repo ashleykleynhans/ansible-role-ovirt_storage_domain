@@ -80,7 +80,7 @@ def main():
         url=a_module.params["engine_url"],
         username=a_module.params["engine_user"],
         password=a_module.params["engine_password"],
-        cafile=a_module.params["engine_cafile"]
+        ca_file=a_module.params["engine_cafile"]
     )
 
     # Get the storage domains that match example_dc and return the one with
