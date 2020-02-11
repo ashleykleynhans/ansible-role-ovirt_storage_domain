@@ -6,7 +6,7 @@
     engine_user: "{{ engine_user }}"
     engine_password: "{{ engine_password }}"
     engine_cafile: "{{ engine_cafile }}"
-    engine_data_centre: "{{ engine_data_centre }}"
+    cluster: "{{ cluster }}"
   register: ovirt_storage_domain
   delegate_to: localhost
   tags:

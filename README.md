@@ -16,7 +16,7 @@ Role Variables
     engine_user: "admin@internal"
     engine_password: "password"
     engine_cafile:  "CA_FILE_PATH"
-    engine_data_centre: "example_dc"
+    cluster: "example_cluster"
 
 For security reasons, it is strongly recommended to use Ansible vault to encrypt the *engine_password*.
 
