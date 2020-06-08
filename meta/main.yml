@@ -1,7 +1,7 @@
 galaxy_info:
   author: Ashley Kleynhans
   description: Ansible role to get a list of oVirt storage domains through the oVirt REST API, and return the name of the storage domain with the most available storage capacity.
-  company: First National Bank (FNB)
+  company: Personal
   license: Apache2
   min_ansible_version: 2.9
   platforms:
