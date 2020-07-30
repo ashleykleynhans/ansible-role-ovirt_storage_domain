@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: ovirt-storage-domain
   author: Ashley Kleynhans
   description: Ansible role to get a list of oVirt storage domains through the oVirt REST API, and return the name of the storage domain with the most available storage capacity.
   company: Personal
