@@ -44,7 +44,7 @@ def main():
    engine_password     = dict(type="str", required=True, no_log=True),
    engine_cafile       = dict(type="str", required=True, no_log=True),
    cluster             = dict(type="str", required=True),
-   blacklisted_domains = dict(type="list", required=False), 
+   blacklisted_domains = dict(type="list", required=False, default=[]), 
   )
 
   a_module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=False)
@@ -67,11 +67,6 @@ def main():
 
   if a_module.params["cluster"] and a_module.params["cluster"] == 'example_cluster':
     a_module.fail_json(msg="cluster variable has not been changed from default")
-
-  if a_module.params["blacklisted_domains"]:
-    blacklisted_domains = a_module.params["blacklisted_domains"]
-  else:
-    blacklisted_domains = []
 
   result = dict(changed=False)
 
