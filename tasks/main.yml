@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible-role-ovirt_storage_domain
+
 - name: Get Optimal oVirt Storage Domain
   get_storage_domain:
     engine_url: "{{ engine_url }}"
@@ -7,6 +7,7 @@
     engine_password: "{{ engine_password }}"
     engine_cafile: "{{ engine_cafile }}"
     cluster: "{{ cluster }}"
+    blacklisted_domains: "{{ blacklisted_domains }}"
   register: ovirt_storage_domain
   delegate_to: localhost
   tags:
