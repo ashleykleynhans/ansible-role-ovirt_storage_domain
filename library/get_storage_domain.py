@@ -80,7 +80,7 @@ def main():
 
   # Get the storage domains that match example_dc and return the one with
   # the most available disk space
-  sd = get_storage_domain(connection, a_module.params["cluster"], a_module.params["blackisted_domains"])
+  sd = get_storage_domain(connection, a_module.params["cluster"], a_module.params["blacklisted_domains"])
 
   if sd is not None:
     result["changed"] = True
