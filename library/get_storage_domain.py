@@ -7,6 +7,7 @@ import json
 
 try:
   import ovirtsdk4 as sdk
+  import ovirtsdk4.types as types
 
   OVIRTSDK_FOUND = True
 except ImportError:
@@ -28,7 +29,7 @@ def get_storage_domain(connection, cluster, blacklisted_domains):
       storage_domain = sd
       continue
 
-    if sd.available is not None and sd.name not in blacklisted_domains and sd.available > storage_domain.available:
+    if sd.available is not None and sd.status == types.StorageDomainStatus.ACTIVE and sd.name not in blacklisted_domains and sd.available > storage_domain.available:
       storage_domain = sd
 
   # Close the connection to the server:
