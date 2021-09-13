@@ -25,11 +25,11 @@ def get_storage_domain(connection, cluster, blacklisted_domains):
   clstr = clstr[0]
 
   for sd in clstr.data_center.storage_domains:
-    if storage_domain is None and sd.name not in blacklisted_domains:
+    if storage_domain is None and sd.name not in blacklisted_domains and sd.available is not None:
       storage_domain = sd
       continue
 
-    if hasattr(sd, 'available') and hasattr(storage_domain, 'available') and sd.available is not None and sd.status == types.StorageDomainStatus.ACTIVE and sd.name not in blacklisted_domains and sd.available > storage_domain.available:
+    if hasattr(sd, 'available') and sd.available is not None and sd.status == types.StorageDomainStatus.ACTIVE and sd.name not in blacklisted_domains and (storage_domain is None or sd.available > storage_domain.available):
       storage_domain = sd
 
   # Close the connection to the server:
